@@ -1,0 +1,63 @@
+#include "widget.h"
+#include "ui_widget.h"
+#include <qtimer.h>
+#include <QDebug>
+#include <QString>
+#include "omalabel.h"
+
+Widget::Widget(QWidget *parent) :
+    QWidget(parent),
+    ui(new Ui::Widget)
+{
+    ui->setupUi(this);
+
+    //Ajan toiminta
+    connect(this,SIGNAL(vaihdaAika(int)),this,SLOT(nayttoAika(int)));
+    connect(timer,SIGNAL(timeout()), this, SLOT (ajastinLaukesi()));
+    timer->setInterval(1000);
+
+    //Oven toiminta
+    QPixmap *ovi = new QPixmap("C:\\Koulu\\CppJatko\\ex7\\mikroMateriaali\\mikoMateriaali\\mikrokiinni.jpg");
+    ovi->scaledToHeight();
+    ovi->scaledToWidth();
+    ui->mikronOvi->setPixmap(*ovi);
+
+
+}
+
+Widget::~Widget()
+{
+    delete ui;
+}
+
+void Widget::on_ajastin_valueChanged(int value)
+{
+    int aika = value;
+    qDebug() << "arvo on " << ui->naytto->value();
+    emit vaihdaAika(aika);
+}
+
+void Widget::nayttoAika(int t)
+{
+    ui->naytto->display(t);
+}
+
+void Widget::ajastinLaukesi()
+{
+    ui->ajastin->setValue(ui->ajastin->value()-1);
+}
+
+void Widget::on_startButton_clicked()
+{
+    timer->start();
+
+}
+
+void Widget::on_stopResetButton_clicked()
+{
+    if(!timer->isActive()){
+        ui->ajastin->setValue(0);
+    } else {
+        timer->stop();
+    }
+}

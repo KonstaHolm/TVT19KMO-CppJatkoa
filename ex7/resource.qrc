@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/">
+        <file>mikroMateriaali/mikoMateriaali/mikro.mp3</file>
+        <file>mikroMateriaali/mikoMateriaali/mikroauki.JPG</file>
+        <file>mikroMateriaali/mikoMateriaali/mikrokiinni.JPG</file>
+    </qresource>
+</RCC>
